@@ -10,7 +10,7 @@ $this->title = 'Json';
 ?>
 
 <div>
-    <?php $form = ActiveForm::begin(['id' => 'json-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'json-form', 'enableAjaxValidation' => true]); ?>
 
     <?= $form->field($model, 'method')->dropdownList(['POST', 'GET']) ?>
 

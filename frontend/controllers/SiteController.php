@@ -16,6 +16,11 @@ class SiteController extends Controller
         $modelJsonForm = new JsonForm();
         $method = Yii::$app->request->method;
 
+        if (Yii::$app->request->isAjax && $modelJsonForm->load(Yii::$app->request->$method())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelJsonForm);
+        }
+
         if ($modelJsonForm->load(Yii::$app->request->$method()) and $modelJsonForm->validate()) {
             $request = Yii::$app->request->$method();
 
