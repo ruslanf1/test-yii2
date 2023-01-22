@@ -2,103 +2,111 @@
 
 namespace backend\controllers;
 
-use common\models\LoginForm;
-use Yii;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use common\models\Json;
+use backend\models\JsonSearch;
 use yii\web\Controller;
-use yii\web\Response;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * Site controller
+ * SiteController implements the CRUD actions for Json model.
  */
 class SiteController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
                     ],
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+            ]
+        );
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
-            ],
-        ];
-    }
-
-    /**
-     * Displays homepage.
+     * Lists all Json models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new JsonSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
-     * Login action.
-     *
-     * @return string|Response
+     * Displays a single Json model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionLogin()
+    public function actionView($id)
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Updates an existing Json model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $this->layout = 'blank';
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-
-        return $this->render('login', [
+        return $this->render('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Logout action.
-     *
-     * @return Response
+     * Deletes an existing Json model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionLogout()
+    public function actionDelete($id)
     {
-        Yii::$app->user->logout();
+        $this->findModel($id)->delete();
 
-        return $this->goHome();
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Json model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Json the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Json::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

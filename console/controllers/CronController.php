@@ -2,7 +2,8 @@
 
 namespace console\controllers;
 
-use console\models\User;
+use common\models\Token;
+use common\models\User;
 use yii\console\Controller;
 
 class CronController extends Controller
@@ -10,15 +11,23 @@ class CronController extends Controller
     public function actionGetToken($login, $password)
     {
         $passwordHash = md5($password);
+        $user = User::find()
+            ->where(['username' => $login])
+            ->andWhere(['password_hash' => $passwordHash])
+            ->one();
 
-        if ($userId = User::find()->where(['username' => $login, 'password_hash' => $passwordHash])->one()) {
+        if ($user) {
             $accessToken = bin2hex(random_bytes(15));
-            $userId->access_token = $accessToken;
-            $userId->token_lifetime = time() + 300;
-            $userId->save();
+
+            $token = new Token();
+            $token->access_token = $accessToken;
+            $token->user_id = $user->id;
+            $token->save();
+
             echo $accessToken;
-        } else {
-            echo 'Неверный логин или пароль';
+            return;
         }
+
+        echo 'Неверный логин или пароль';
     }
 }
