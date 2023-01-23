@@ -12,13 +12,11 @@ $this->title = 'Json';
 <div>
     <?php $form = ActiveForm::begin(['id' => 'json-form', 'enableAjaxValidation' => true]); ?>
 
-    <?= $form->field($model, 'method')->dropdownList(['POST', 'GET']) ?>
+        <?= $form->field($model, 'method')->dropdownList(['POST', 'GET']) ?>
+        <?= $form->field($model, 'token') ?>
+        <?= $form->field($model, 'json')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'token') ?>
-
-    <?= $form->field($model, 'json')->textarea(['rows' => 6]) ?>
-
-    <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'id' => 'button']) ?>
+        <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'id' => 'button']) ?>
 
     <?php ActiveForm::end(); ?>
 </div>

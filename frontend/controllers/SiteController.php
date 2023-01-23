@@ -32,7 +32,7 @@ class SiteController extends Controller
             $time = sprintf('%0.3f', Yii::getLogger()->getElapsedTime());
             $memory = round(memory_get_peak_usage() / (1024 * 1024), 2);
 
-            return $this->render('index-confirm', ['id' => $modelJson->id, 'time' => $time, 'memory' => $memory, 'method' => $method]);
+            return $this->render('index-confirm', ['id' => $modelJson->id, 'time' => $time, 'memory' => $memory]);
         }
         return $this->render('index', ['model' => $modelJsonForm]);
     }
