@@ -9,7 +9,6 @@ class JsonForm extends Model
 {
     public $json;
     public $token;
-    public $userId;
     public $method;
 
     public function rules()
@@ -26,12 +25,11 @@ class JsonForm extends Model
         $token = Token::find()
             ->orderBy(['id' => SORT_DESC])
             ->one();
-        $this->userId = $token->user_id;
 
         if ($token->access_token !== $this->token) {
             $this->addError('token', 'Неверный токен');
         }
-        if ($token->created_at + 300 < time()) {
+        if ($token->created_at + 100000 < time()) {
             $this->addError('token', 'Время действия токена истекло');
         }
 
