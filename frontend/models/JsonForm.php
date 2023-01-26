@@ -27,7 +27,7 @@ class JsonForm extends Model
         if ($token->access_token !== $this->token) {
             $this->addError('token', 'Неверный токен');
         }
-        if ($token->created_at + 100000 < time()) {
+        if ($token->created_at + 1200 < time()) {
             $this->addError('token', 'Время действия токена истекло');
         }
 
