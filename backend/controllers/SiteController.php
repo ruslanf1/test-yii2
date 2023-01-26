@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use common\models\Json;
-use backend\models\JsonSearch;
+use common\models\JsonData;
+use backend\models\JsonDataSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SiteController implements the CRUD actions for Json model.
+ * SiteController implements the CRUD actions for JsonData model.
  */
 class SiteController extends Controller
 {
@@ -32,13 +32,13 @@ class SiteController extends Controller
     }
 
     /**
-     * Lists all Json models.
+     * Lists all JsonData models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new JsonSearch();
+        $searchModel = new JsonDataSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays a single Json model.
+     * Displays a single JsonData model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,7 +61,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Updates an existing Json model.
+     * Updates an existing JsonData model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -81,7 +81,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Deletes an existing Json model.
+     * Deletes an existing JsonData model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -95,15 +95,15 @@ class SiteController extends Controller
     }
 
     /**
-     * Finds the Json model based on its primary key value.
+     * Finds the JsonData model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Json the loaded model
+     * @return JsonData the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Json::findOne(['id' => $id])) !== null) {
+        if (($model = JsonData::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

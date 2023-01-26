@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Json;
+use common\models\JsonData;
 
 /**
- * JsonSearch represents the model behind the search form of `common\models\Json`.
+ * JsonDataSearch represents the model behind the search form of `common\models\JsonData`.
  */
-class JsonSearch extends Json
+class JsonDataSearch extends JsonData
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class JsonSearch extends Json
      */
     public function search($params)
     {
-        $query = Json::find();
+        $query = JsonData::find();
 
         // add conditions that should always apply here
 

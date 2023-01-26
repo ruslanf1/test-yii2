@@ -55,4 +55,21 @@ class Token extends \yii\db\ActiveRecord
             TimestampBehavior::class,
         ];
     }
+
+    public static function findLastAddToken()
+    {
+        return Token::find()
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+    }
+
+    public static function add($accessToken, $userId)
+    {
+        $model = new static([
+            'access_token' => $accessToken,
+            'user_id' => $userId
+        ]);
+
+        return $model->save();
+    }
 }

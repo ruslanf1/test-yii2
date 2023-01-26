@@ -1,13 +1,13 @@
 <?php
 
-use common\models\Json;
+use common\models\JsonData;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\JsonSearch $searchModel */
+/** @var backend\models\JsonDataSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Jsons';
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Json $model, $key, $index, $column) {
+                'urlCreator' => function ($action, JsonData $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

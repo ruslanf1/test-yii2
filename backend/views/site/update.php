@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Json $model */
+/** @var common\models\JsonData $model */
 
-$this->title = 'Update Json: ' . $model->id;
+$this->title = 'Update JsonData: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Jsons', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

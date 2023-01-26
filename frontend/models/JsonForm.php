@@ -22,9 +22,7 @@ class JsonForm extends Model
 
     public function checkToken()
     {
-        $token = Token::find()
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
+        $token = Token::findLastAddToken();
 
         if ($token->access_token !== $this->token) {
             $this->addError('token', 'Неверный токен');

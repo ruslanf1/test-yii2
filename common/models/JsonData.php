@@ -16,7 +16,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property User $user
  */
-class Json extends \yii\db\ActiveRecord
+class JsonData extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -46,7 +46,7 @@ class Json extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'json' => 'Json',
+            'json' => 'JsonData',
             'user_id' => 'User ID',
         ];
     }
@@ -66,5 +66,16 @@ class Json extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public static function add($jsonText, $userId)
+    {
+        $model = new static([
+            'json' => $jsonText,
+            'user_id' => $userId
+        ]);
+        $model->save();
+
+        return $model;
     }
 }

@@ -14,7 +14,7 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
-            'enableCsrfValidation' => false,
+            'enableCsrfValidation' => true,
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
         ],

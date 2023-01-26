@@ -14,7 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property Json[] $jsons
+ * @property JsonData[] $jsons
  * @property Token[] $tokens
  */
 class User extends \yii\db\ActiveRecord
@@ -46,7 +46,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getJsons()
     {
-        return $this->hasMany(Json::class, ['user_id' => 'id']);
+        return $this->hasMany(JsonData::class, ['user_id' => 'id']);
     }
 
     /**
@@ -64,5 +64,13 @@ class User extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public static function findUser($username, $password)
+    {
+        return User::find()
+            ->where(['username' => $username])
+            ->andWhere(['password_hash' => $password])
+            ->one();
     }
 }

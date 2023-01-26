@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Json $model */
+/** @var common\models\JsonData $model */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Jsons', 'url' => ['index']];
