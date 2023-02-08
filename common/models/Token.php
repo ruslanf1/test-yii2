@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -49,6 +48,9 @@ class Token extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    /**
+     * @return string[]
+     */
     public function behaviors()
     {
         return [
@@ -56,13 +58,21 @@ class Token extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function findLastAddToken()
+    /**
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public static function findLastAddedToken()
     {
-        return Token::find()
+        return static::find()
             ->orderBy(['id' => SORT_DESC])
             ->one();
     }
 
+    /**
+     * @param $accessToken
+     * @param $userId
+     * @return static
+     */
     public static function add($accessToken, $userId)
     {
         $model = new static([
@@ -70,6 +80,7 @@ class Token extends \yii\db\ActiveRecord
             'user_id' => $userId
         ]);
 
-        return $model->save();
+        $model->save();
+        return $model;
     }
 }

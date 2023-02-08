@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -59,6 +58,9 @@ class User extends \yii\db\ActiveRecord
         return $this->hasMany(Token::class, ['user_id' => 'id']);
     }
 
+    /**
+     * @return string[]
+     */
     public function behaviors()
     {
         return [
@@ -66,6 +68,11 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @param $username
+     * @param $password
+     * @return array|\yii\db\ActiveRecord|null
+     */
     public static function findUser($username, $password)
     {
         return User::find()

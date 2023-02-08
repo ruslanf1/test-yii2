@@ -9,20 +9,25 @@ use yii\console\Controller;
 
 class UserController extends Controller
 {
+    /**
+     * @param $login
+     * @param $password
+     * @return void
+     * @throws Exception
+     */
     public function actionGetToken($login, $password)
     {
-        try {
             if ($user = User::findUser($login, md5($password))) {
-
                 $accessToken = bin2hex(random_bytes(15));
-                Token::add($accessToken, $user->id);
-                echo $accessToken;
+                $model = Token::add($accessToken, $user->id);
 
+                if (!$model->hasErrors()) {
+                    echo $accessToken;
+                    return;
+                }
+                echo implode(',', $model->getErrors());
                 return;
             }
             echo 'Неверный логин или пароль';
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
     }
 }

@@ -11,6 +11,9 @@ class JsonForm extends Model
     public $token;
     public $method;
 
+    /**
+     * @return array[]
+     */
     public function rules()
     {
         return [
@@ -20,9 +23,12 @@ class JsonForm extends Model
         ];
     }
 
+    /**
+     * @return void
+     */
     public function checkToken()
     {
-        $token = Token::findLastAddToken();
+        $token = Token::findLastAddedToken();
 
         if ($token->access_token !== $this->token) {
             $this->addError('token', 'Неверный токен');

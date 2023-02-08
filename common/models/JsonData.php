@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -61,6 +60,9 @@ class JsonData extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    /**
+     * @return string[]
+     */
     public function behaviors()
     {
         return [
@@ -68,6 +70,11 @@ class JsonData extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @param $jsonText
+     * @param $userId
+     * @return static
+     */
     public static function add($jsonText, $userId)
     {
         $model = new static([

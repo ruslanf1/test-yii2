@@ -1,15 +1,14 @@
-$('#button').on('click', function (e) {
+$(document).on('submit', '#json-form', function (e) {
+    e.preventDefault()
     const token = $('#jsonform-token').val()
     const json = $('#jsonform-json').val()
     const method = $('#jsonform-method option:selected').text()
-    e.preventDefault()
 
     $.ajax({
-        url: 'index.php?r=site/index',
+        url: '/form',
         type: method,
         headers: {Auth: token},
         data: {json: json},
-        dataType: 'json'
     }).done(function (response) {
         $('#json-form').html(response)
     }).fail(function () {

@@ -12,4 +12,4 @@ use yii\helpers\Html;
     <li><label>Method</label>: <?= Html::encode($method) ?></li>
 </ul>
 
-<input class="btn btn-primary" type="button" value="Назад" onClick='location.href="index.php?r=site/index"'>
+<input class="btn btn-primary" type="button" value="Назад" onClick='location.href="/form"'>
